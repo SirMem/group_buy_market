@@ -3,6 +3,8 @@ package com.needyou.domain.activity.service.trial.factory;
 
 import com.needyou.domain.activity.model.entity.MarketProductEntity;
 import com.needyou.domain.activity.model.entity.TrialBalanceEntity;
+import com.needyou.domain.activity.model.valobj.GroupBuyActivityDiscountVO;
+import com.needyou.domain.activity.model.valobj.SkuVO;
 import com.needyou.domain.activity.service.trial.node.RootNode;
 import com.needyou.types.design.framework.tree.StrategyHandler;
 import lombok.AllArgsConstructor;
@@ -34,6 +36,10 @@ public class DefaultActivityStrategyFactory {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class DynamicContext {
+        // 拼团活动营销配置值对象
+        private GroupBuyActivityDiscountVO groupBuyActivityDiscountVO;
+        // 商品信息
+        private SkuVO skuVO;
 
     }
 
