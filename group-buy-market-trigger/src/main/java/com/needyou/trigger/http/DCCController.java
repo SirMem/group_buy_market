@@ -1,6 +1,6 @@
 package com.needyou.trigger.http;
 
-import com.needyou.api.dto.IDCCService;
+import com.needyou.api.IDCCService;
 import com.needyou.api.response.Response;
 import com.needyou.types.enums.ResponseCode;
 import lombok.extern.slf4j.Slf4j;

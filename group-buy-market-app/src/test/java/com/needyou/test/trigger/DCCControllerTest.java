@@ -1,7 +1,7 @@
 package com.needyou.test.trigger;
 
 import com.alibaba.fastjson.JSON;
-import com.needyou.api.dto.IDCCService;
+import com.needyou.api.IDCCService;
 import com.needyou.domain.activity.model.entity.MarketProductEntity;
 import com.needyou.domain.activity.model.entity.TrialBalanceEntity;
 import com.needyou.domain.activity.service.IIndexGroupBuyMarketService;

@@ -1,4 +1,4 @@
-package com.needyou.api.dto;
+package com.needyou.api;
 
 import com.needyou.api.response.Response;
 

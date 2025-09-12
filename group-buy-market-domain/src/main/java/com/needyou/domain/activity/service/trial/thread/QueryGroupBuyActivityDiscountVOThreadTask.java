@@ -16,6 +16,11 @@ import java.util.concurrent.Callable;
 public class QueryGroupBuyActivityDiscountVOThreadTask implements Callable<GroupBuyActivityDiscountVO> {
 
     /**
+     * 活动ID
+     */
+    private final Long activityId;
+
+    /**
      * 来源
      */
     private final String source;
@@ -34,7 +39,8 @@ public class QueryGroupBuyActivityDiscountVOThreadTask implements Callable<Group
      */
     private final IActivityRepository activityRepository;
 
-    public QueryGroupBuyActivityDiscountVOThreadTask(String source, String channel, String goodsId, IActivityRepository activityRepository) {
+    public QueryGroupBuyActivityDiscountVOThreadTask(Long activityId, String source, String channel, String goodsId, IActivityRepository activityRepository) {
+        this.activityId = activityId;
         this.source = source;
         this.channel = channel;
         this.goodsId = goodsId;
@@ -43,10 +49,13 @@ public class QueryGroupBuyActivityDiscountVOThreadTask implements Callable<Group
 
     @Override
     public GroupBuyActivityDiscountVO call() throws Exception {
-        log.info("开始根据GoodsId获得ActivityId");
-        SCSkuActivityVO scSkuActivityVORes = activityRepository.querySCSkuActivityBySCGoodsId(source, channel, goodsId);
-        if (null == scSkuActivityVORes) {return null;}
-        return activityRepository.queryGroupBuyActivityDiscountVO(scSkuActivityVORes.getActivityId());
+        Long availableActivityId = activityId;
+        if (null == activityId) {
+            SCSkuActivityVO scSkuActivityVORes = activityRepository.querySCSkuActivityBySCGoodsId(source, channel, goodsId);
+            if (null == scSkuActivityVORes) {return null;}
+            availableActivityId = scSkuActivityVORes.getActivityId();
+        }
+        return activityRepository.queryGroupBuyActivityDiscountVO(availableActivityId);
     }
 
 }
