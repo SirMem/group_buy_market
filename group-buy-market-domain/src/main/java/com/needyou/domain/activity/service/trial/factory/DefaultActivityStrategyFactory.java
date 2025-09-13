@@ -48,6 +48,9 @@ public class DefaultActivityStrategyFactory {
         //可见性
         private boolean visible;
 
+        // 支付金额
+        private BigDecimal payPrice;
+
         // 可用性
         private boolean enable;
 
