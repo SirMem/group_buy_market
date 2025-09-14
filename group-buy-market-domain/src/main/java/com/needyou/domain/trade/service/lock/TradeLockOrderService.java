@@ -1,10 +1,11 @@
-package com.needyou.domain.trade.service;
+package com.needyou.domain.trade.service.lock;
 
 import com.needyou.domain.trade.adapter.repository.ITradeRepository;
 import com.needyou.domain.trade.model.aggregate.GroupBuyOrderAggregate;
 import com.needyou.domain.trade.model.entity.*;
 import com.needyou.domain.trade.model.valobj.GroupBuyProgressVO;
-import com.needyou.domain.trade.service.factory.TradeRuleFilterFactory;
+import com.needyou.domain.trade.service.ITradeLockOrderService;
+import com.needyou.domain.trade.service.lock.factory.TradeRuleFilterFactory;
 import com.needyou.types.design.framework.link.model2.chain.BusinessLinkedList;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,7 @@ import javax.annotation.Resource;
 
 @Service
 @Slf4j
-public class TradeOrderService implements ITradeOrderService {
+public class TradeLockOrderService implements ITradeLockOrderService {
 
     @Resource
     private ITradeRepository repository;

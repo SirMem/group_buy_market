@@ -14,15 +14,12 @@ import com.needyou.domain.trade.model.entity.PayActivityEntity;
 import com.needyou.domain.trade.model.entity.PayDiscountEntity;
 import com.needyou.domain.trade.model.entity.UserEntity;
 import com.needyou.domain.trade.model.valobj.GroupBuyProgressVO;
-import com.needyou.domain.trade.service.ITradeOrderService;
+import com.needyou.domain.trade.service.ITradeLockOrderService;
 import com.needyou.types.enums.ResponseCode;
 import com.needyou.types.exception.AppException;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.Objects;
@@ -42,11 +39,11 @@ public class MarketTradeController implements IMarketTradeService {
     private IIndexGroupBuyMarketService indexGroupBuyMarketService;
 
     @Resource
-    private ITradeOrderService tradeOrderService;
+    private ITradeLockOrderService tradeLockOrderService;
 
     @RequestMapping(value = "lock_market_pay_order", method = RequestMethod.POST)
     @Override
-    public Response<LockMarketPayOrderResponseDTO> lockMarketPayOrder(LockMarketPayOrderRequestDTO lockMarketPayOrderRequestDTO) {
+    public Response<LockMarketPayOrderResponseDTO> lockMarketPayOrder(@RequestBody LockMarketPayOrderRequestDTO lockMarketPayOrderRequestDTO) {
         try {
             // 参数
             String userId = lockMarketPayOrderRequestDTO.getUserId();
@@ -67,7 +64,7 @@ public class MarketTradeController implements IMarketTradeService {
             }
 
             // 查询 outTradeNo 是否已经存在交易记录
-            MarketPayOrderEntity marketPayOrderEntity = tradeOrderService.queryNoPayMarketPayOrderByOutTradeNo(userId, outTradeNo);
+            MarketPayOrderEntity marketPayOrderEntity = tradeLockOrderService.queryNoPayMarketPayOrderByOutTradeNo(userId, outTradeNo);
             if (null != marketPayOrderEntity) {
                 LockMarketPayOrderResponseDTO lockMarketPayOrderResponseDTO = LockMarketPayOrderResponseDTO.builder()
                         .orderId(marketPayOrderEntity.getOrderId())
@@ -85,7 +82,7 @@ public class MarketTradeController implements IMarketTradeService {
 
             // 判断拼团锁单是否完成了目标
             if (null != teamId) {
-                GroupBuyProgressVO groupBuyProgressVO = tradeOrderService.queryGroupBuyProgress(teamId);
+                GroupBuyProgressVO groupBuyProgressVO = tradeLockOrderService.queryGroupBuyProgress(teamId);
                 if (null != groupBuyProgressVO && Objects.equals(groupBuyProgressVO.getTargetCount(), groupBuyProgressVO.getLockCount())) {
                     log.info("交易锁单拦截-拼单目标已达成:{} {}", userId, teamId);
                     return Response.<LockMarketPayOrderResponseDTO>builder()
@@ -116,7 +113,7 @@ public class MarketTradeController implements IMarketTradeService {
             GroupBuyActivityDiscountVO groupBuyActivityDiscountVO = trialBalanceEntity.getGroupBuyActivityDiscountVO();
 
             // 锁单
-            marketPayOrderEntity = tradeOrderService.lockMarketPayOrder(
+            marketPayOrderEntity = tradeLockOrderService.lockMarketPayOrder(
                     UserEntity.builder().userId(userId).build(),
                     PayActivityEntity.builder()
                             .teamId(teamId)

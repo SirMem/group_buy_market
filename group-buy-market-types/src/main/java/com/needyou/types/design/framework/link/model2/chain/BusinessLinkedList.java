@@ -8,7 +8,7 @@ import com.needyou.types.design.framework.link.model2.handler.ILogicHandler;
  * @description 业务链路
  * @create 2025-01-18 10:27
  */
-public class BusinessLinkedList<T, D, R> extends LinkedList<ILogicHandler<T, D, R>> implements ILogicHandler<T, D, R>{
+public class  BusinessLinkedList<T, D, R> extends LinkedList<ILogicHandler<T, D, R>> implements ILogicHandler<T, D, R>{
 
     public BusinessLinkedList(String name) {
         super(name);

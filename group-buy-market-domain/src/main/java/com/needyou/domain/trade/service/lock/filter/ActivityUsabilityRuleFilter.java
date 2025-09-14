@@ -1,10 +1,10 @@
-package com.needyou.domain.trade.service.filter;
+package com.needyou.domain.trade.service.lock.filter;
 
 import com.needyou.domain.trade.adapter.repository.ITradeRepository;
 import com.needyou.domain.trade.model.entity.GroupBuyActivityEntity;
 import com.needyou.domain.trade.model.entity.TradeRuleCommandEntity;
 import com.needyou.domain.trade.model.entity.TradeRuleFilterBackEntity;
-import com.needyou.domain.trade.service.factory.TradeRuleFilterFactory;
+import com.needyou.domain.trade.service.lock.factory.TradeRuleFilterFactory;
 import com.needyou.types.design.framework.link.model2.handler.ILogicHandler;
 import com.needyou.types.enums.ActivityStatusEnumVO;
 import com.needyou.types.enums.ResponseCode;
