@@ -52,5 +52,7 @@ public class GroupBuyOrder {
     private Date validStartTime;
     /** 有效结束时间 */
     private Date validEndTime;
+    /** 回调链接 */
+    private String notifyUrl;
 
 }
