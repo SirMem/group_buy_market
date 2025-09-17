@@ -17,6 +17,7 @@ import com.needyou.infrastructure.dao.po.GroupBuyActivity;
 import com.needyou.infrastructure.dao.po.GroupBuyOrder;
 import com.needyou.infrastructure.dao.po.GroupBuyOrderList;
 import com.needyou.infrastructure.dao.po.NotifyTask;
+import com.needyou.infrastructure.dcc.DCCService;
 import com.needyou.types.common.Constants;
 import com.needyou.types.enums.ActivityStatusEnumVO;
 import com.needyou.types.enums.GroupBuyOrderEnumVO;
@@ -50,6 +51,8 @@ public class TradeRepository implements ITradeRepository {
     private IGroupBuyActivityDao groupBuyActivityDao;
     @Resource
     private INotifyTaskDao notifyTaskDao;
+    @Resource
+    private DCCService dccService;
 
 
     @Override
@@ -189,6 +192,8 @@ public class TradeRepository implements ITradeRepository {
                 .completeCount(groupBuyOrder.getCompleteCount())
                 .lockCount(groupBuyOrder.getLockCount())
                 .targetCount(groupBuyOrder.getTargetCount())
+                .validStartTime(groupBuyOrder.getValidStartTime())
+                .validEndTime(groupBuyOrder.getValidEndTime())
                 .build();
     }
 
@@ -204,6 +209,7 @@ public class TradeRepository implements ITradeRepository {
         GroupBuyOrderList groupBuyOrderListReq = new GroupBuyOrderList();
         groupBuyOrderListReq.setUserId(userEntity.getUserId());
         groupBuyOrderListReq.setOutTradeNo(tradePaySuccessEntity.getOutTradeNo());
+        groupBuyOrderListReq.setOutTradeTime(tradePaySuccessEntity.getOutTradeTime());
         int updateOrderListStatusCount = groupBuyOrderListDao.updateOrderStatus2COMPLETE(groupBuyOrderListReq);
         if (1 != updateOrderListStatusCount) {
             throw new AppException(ResponseCode.E0005);
@@ -240,6 +246,10 @@ public class TradeRepository implements ITradeRepository {
             notifyTaskDao.insert(notifyTask);
         }
 
+    }
 
+    @Override
+    public boolean isSCBlackIntercept(String source, String channel) {
+        return dccService.isSCBlackIntercept(source, channel);
     }
 }
