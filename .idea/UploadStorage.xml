@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="UploadStorage">
+    <option name="envList">
+      <list>
+        <EnvDTO>
+          <option name="env" value="group-buy-market" />
+          <option name="urlMap">
+            <map>
+              <entry key="group-buy-market-trigger" value="http://localhost:8091" />
+            </map>
+          </option>
+        </EnvDTO>
+      </list>
+    </option>
+  </component>
+</project>

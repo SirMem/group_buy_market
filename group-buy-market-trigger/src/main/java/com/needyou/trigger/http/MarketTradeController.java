@@ -4,6 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.needyou.api.IMarketTradeService;
 import com.needyou.api.dto.LockMarketPayOrderRequestDTO;
 import com.needyou.api.dto.LockMarketPayOrderResponseDTO;
+import com.needyou.api.dto.SettlementMarketPayOrderRequestDTO;
+import com.needyou.api.dto.SettlementMarketPayOrderResponseDTO;
 import com.needyou.api.response.Response;
 import com.needyou.domain.activity.model.entity.MarketProductEntity;
 import com.needyou.domain.activity.model.entity.TrialBalanceEntity;
@@ -161,4 +163,8 @@ public class MarketTradeController implements IMarketTradeService {
         }
     }
 
+    @Override
+    public Response<SettlementMarketPayOrderResponseDTO> settlementMarketPayOrder(SettlementMarketPayOrderRequestDTO requestDTO) {
+        return null;
+    }
 }
